@@ -1,0 +1,23 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "gerenciador de tarefas",
+  "homepage": "https://github.com/nathan-santoss/to-do-list#readme",
+  "bugs": {
+    "url": "https://github.com/nathan-santoss/to-do-list/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathan-santoss/to-do-list.git"
+  },
+  "license": "ISC",
+  "author": "nathan-santos",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "electron": "^39.2.4"
+  }
+}

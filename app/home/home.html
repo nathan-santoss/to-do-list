@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas Minimalista</title>
+    <style>
+        :root {
+            --cor-fundo-principal: #f0ebf5;
+            --cor-card-fundo: #ffffff;
+            --cor-primaria: #a27ae7;
+            --cor-primaria-hover: #8f6bc0;
+            --cor-texto: #333333;
+            --cor-borda-suave: #e1dbe9;
+            --cor-input-fundo: #f7f5fa;
+            --arredondamento-geral: 12px;
+            --arredondamento-pequeno: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--cor-fundo-principal);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--cor-texto);
+            box-sizing: border-box;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            min-height: 400px;
+            background-color: var(--cor-card-fundo);
+            border-radius: var(--arredondamento-geral);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--cor-borda-suave);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--cor-borda-suave);
+        }
+
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--cor-primaria);
+        }
+
+        .day-selector {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-radius: var(--arredondamento-pequeno);
+            gap: 5px;
+            border: 1px solid var(--cor-borda-suave);
+        }
+        
+        .day-label {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            cursor: pointer;
+            border-radius: var(--arredondamento-pequeno);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--cor-texto);
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        .day-input {
+            display: none;
+        }
+        
+        .day-input:checked + .day-label {
+            background-color: var(--cor-primaria);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(162, 122, 231, 0.3);
+        }
+        
+        .day-label:hover:not(.day-input:checked + .day-label) {
+            background-color: var(--cor-input-fundo);
+        }
+
+        /* Área de Lista Vazia */
+        .feature-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px; 
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        .add-task-area {
+            display: flex;
+            padding: 20px 0 0 0;
+            margin-top: auto;
+        }
+
+        .new-task-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--cor-borda-suave);
+            border-radius: var(--arredondamento-pequeno) 0 0 var(--arredondamento-pequeno);
+            border-right: none;
+            font-size: 1rem;
+            outline: none;
+            background-color: var(--cor-input-fundo);
+        }
+
+        .add-button {
+            background-color: var(--cor-primaria);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 0 var(--arredondamento-pequeno) var(--arredondamento-pequeno) 0;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .add-button:hover {
+            background-color: var(--cor-primaria-hover);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="main-content">
+            
+            <div class="content-header">
+                <div class="content-title-group">
+                    <span class="content-title">Minhas Tarefas</span>
+                </div>
+            </div>
+            
+            <!-- SELETOR DE DIAS DA SEMANA (Funcional apenas com CSS) -->
+            <div class="day-selector">
+                <input type="radio" name="day_selector" class="day-input" id="seg" value="seg" checked>
+                <label for="seg" class="day-label">Seg</label>
+                
+                <input type="radio" name="day_selector" class="day-input" id="ter" value="ter">
+                <label for="ter" class="day-label">Ter</label>
+                
+                <input type="radio" name="day_selector" class="day-input" id="qua" value="qua">
+                <label for="qua" class="day-label">Qua</label>
+                
+                <input type="radio" name="day_selector" class="day-input" id="qui" value="qui">
+                <label for="qui" class="day-label">Qui</label>
+                
+                <input type="radio" name="day_selector" class="day-input" id="sex" value="sex">
+                <label for="sex" class="day-label">Sex</label>
+                
+                <input type="radio" name="day_selector" class="day-input" id="sab" value="sab">
+                <label for="sab" class="day-label">Sáb</label>
+                
+                <input type="radio" name="day_selector" class="day-input" id="dom" value="dom">
+                <label for="dom" class="day-label">Dom</label>
+            </div>
+            
+            <!-- LISTA DE FEATURES/TAREFAS (Vazia) -->
+            <div class="feature-list">
+                <p>Nenhuma tarefa agendada para este dia.</p>
+            </div>
+
+            <!-- ÁREA DE ADICIONAR NOVA TAREFA -->
+            <div class="add-task-area">
+                <input type="text" class="new-task-input" placeholder="Nova tarefa...">
+                <button class="add-button">
+                    +
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>

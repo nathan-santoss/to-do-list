@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld('api', {
-    cadastro: (novo_usuario) => ipcRenderer.send('solicitacao-cadastro', novo_usuario)
+    cadastro: (novo_usuario) => ipcRenderer.send('solicitacao-cadastro', novo_usuario),
+    login: (user) => ipcRenderer.invoke('solicitacao-login', user)
 })

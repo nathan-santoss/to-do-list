@@ -4,121 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Estilo Cosmic</title>
-    <style>
-        /* Variáveis de Cores */
-        :root {
-            --cor-fundo: #f0ebf5;
-            --cor-card-fundo: #ffffff;
-            --cor-primaria: #a27ae7;
-            --cor-primaria-hover: #8f6bc0;
-            --cor-texto: #333333;
-            --cor-input-borda: #e1dbe9;
-            --sombra-leve: 0 4px 10px rgba(0, 0, 0, 0.05);
-            --arredondamento: 12px;
-        }
-
-        /* Estilo Geral do Corpo */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--cor-fundo);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            color: var(--cor-texto);
-            box-sizing: border-box;
-            padding: 20px;
-        }
-
-        /* Container Central (Card de Cadastro) */
-        .cadastro-card {
-            background-color: var(--cor-card-fundo);
-            padding: 40px 45px;
-            border-radius: var(--arredondamento);
-            box-shadow: var(--sombra-leve);
-            width: 100%;
-            max-width: 450px; /* Um pouco mais largo para acomodar mais campos */
-            text-align: center;
-            transition: box-shadow 0.3s ease;
-        }
-
-        /* Efeito sutil de elevação ao passar o mouse */
-        .cadastro-card:hover {
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Título */
-        .cadastro-title {
-            font-size: 1.8rem;
-            color: var(--cor-primaria);
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        /* Formulário */
-        .cadastro-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Espaçamento entre os campos */
-            text-align: left;
-        }
-
-        /* Campo de Texto (Input) */
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--cor-input-borda);
-            border-radius: 8px; /* Arredondamento dos campos */
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background-color: #f7f5fa; /* Fundo do campo sutilmente diferente */
-        }
-
-        /* Foco no Campo de Texto */
-        .form-input:focus {
-            border-color: var(--cor-primaria);
-            box-shadow: 0 0 0 3px rgba(162, 122, 231, 0.2);
-        }
-
-        /* Botão de Cadastro */
-        .cadastro-button {
-            background-color: var(--cor-primaria);
-            color: white;
-            padding: 14px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background-color 0.3s, transform 0.1s;
-            letter-spacing: 0.5px;
-        }
-
-        /* Hover do Botão */
-        .cadastro-button:hover {
-            background-color: var(--cor-primaria-hover);
-        }
-
-        /* Pressionar o Botão (Clique) */
-        .cadastro-button:active {
-            transform: scale(0.99);
-        }
-
-        /* Esconder o label padrão do input para acessibilidade visual */
-        .form-label {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -139,7 +25,7 @@
 
             <div class="form-group">
                 <label for="cpf" class="form-label">CPF</label>
-                <input id="cpf" type="text" name="cpf" class="form-input" placeholder="CPF" required pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}">
+                <input id="cpf" type="text" name="cpf" class="form-input" placeholder="CPF" required>
             </div>
             
             <div class="form-group">
@@ -158,6 +44,6 @@
             
         </form>
     </div>
-
+    <script src="renderer.js"></script>
 </body>
 </html>

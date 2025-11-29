@@ -6,7 +6,12 @@ const cadastrar_usuario = () => {
             cpf: document.getElementById('cpf').value,
             senha: conflit_pass(document.getElementById('senha-1').value, document.getElementById('senha-2').value)
         }
-        window.api.cadastro(novo_usuario)
+        window.api.cadastro(novo_usuario).then((result) => {
+            if(result === false){
+                throw new Error('Erro ao tentar criar usuário')
+            }
+            window.location.href = '../Login-inicio/login.html'
+        })
     }catch(err){
         console.error(err)
         return

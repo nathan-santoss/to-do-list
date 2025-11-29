@@ -8,6 +8,7 @@ import fs from 'fs'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const preload = path.join(__dirname, 'preload.js')
+const paginaHtml = path.join(__dirname, '../app/Login-inicio/login.html')
 
 let win = null
 const criarJanela = () => {
@@ -21,7 +22,6 @@ const criarJanela = () => {
             preload: preload
         }
     })
-    const paginaHtml = path.join(__dirname, '../app/Login-inicio/login.html')
     win.loadFile(paginaHtml)
     win.removeMenu()
 }
@@ -33,9 +33,15 @@ app.whenReady().then(() => {
 
 // atualização de usuarios na inicialização >>>>
 const updade_logs = () => {
-    let lista_antiga = fs.readFileSync(savesLogins, 'utf-8')
-    if(users_list.length === 0){
-        users_list = JSON.parse(lista_antiga)
+    try{
+        let endereco = fs.readFileSync(savesLogins, 'utf-8')
+        let listaCriada = JSON.parse(endereco)
+        if(listaCriada.length === 0){
+            return
+        }
+        users_list = listaCriada
+    }catch(err){
+        console.log('Erro na busca do endereco de logs');
         return
     }
 }
@@ -43,10 +49,15 @@ const updade_logs = () => {
 let users_list = []
 const savesLogins = path.join(__dirname, './usuarios/users.json')
 // SOLICITAR CADASTRO
-ipcMain.on('solicitacao-cadastro', (event, novo_usuario) => {
+ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
     users_list.push(novo_usuario)
     console.log('Usuario criado')
-    fs.writeFileSync(savesLogins, JSON.stringify(users_list, null, 2), 'utf-8')
+    try {
+        fs.writeFileSync(savesLogins, JSON.stringify(users_list, null, 2), 'utf-8')
+        return true
+    } catch (err) {
+        console.error(`Erro ao criar usuário: ${err}`)
+    }
 })
 
 ipcMain.handle('solicitacao-login', (event, login) => {

@@ -31,6 +31,22 @@ app.whenReady().then(() => {
     criarJanela()
 })
 
+let taskWindow = null
+const startTask = () => {
+    taskWindow = new BrowserWindow({
+        width: 800, height: 900,
+        webPreferences:{
+            nodeIntegration: false,
+            contextIsolation: true,
+            devTools: false,
+            sandbox: false,
+            preload: preload
+        }
+    })
+    taskWindow.loadFile(path.join(__dirname, '../app/home/taskWindow/task.html'))
+    taskWindow.removeMenu()
+}
+
 // atualização de usuarios na inicialização >>>>
 const updade_logs = () => {
     try{
@@ -70,5 +86,9 @@ ipcMain.handle('solicitacao-login', (event, login) => {
     }catch(err){
         console.error(err)
     }
+})
+
+ipcMain.on('abrir-task', () => {
+    startTask()
 })
 

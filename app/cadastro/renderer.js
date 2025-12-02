@@ -1,5 +1,4 @@
 const cadastrar_usuario = (event) => {
-    event.preventDefault()
     try{
         const novo_usuario = {
             nome: document.getElementById('nome').value,
@@ -7,7 +6,12 @@ const cadastrar_usuario = (event) => {
             cpf: document.getElementById('cpf').value,
             senha: conflit_pass(document.getElementById('senha-1').value, document.getElementById('senha-2').value)
         }
-        console.log('usuario cadastrado:', novo_usuario);
+        window.api.cadastro(novo_usuario).then((result) => {
+            if(result === false){
+                throw new Error('Erro ao tentar criar usuário')
+            }
+            window.location.href = '../Login-inicio/login.html'
+        })
     }catch(err){
         console.error(err)
         return

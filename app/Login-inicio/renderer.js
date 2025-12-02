@@ -8,6 +8,10 @@ const login_user = () => {
         senha: document.getElementById('pass').value
     }
     window.api.login(login_try).then((result) => {
+        if(!result){
+            alert('Dados inválidos!')
+            return
+        }
         window.location.href = '../home/home.html'
     })
 }

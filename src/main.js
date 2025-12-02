@@ -17,13 +17,14 @@ const criarJanela = () => {
         webPreferences:{
             nodeIntegration: false,
             contextIsolation: true,
-            devTools: false,
+            devTools: true,
             sandbox: false,
             preload: preload
         }
     })
     win.loadFile(paginaHtml)
     win.removeMenu()
+    // win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
@@ -38,13 +39,14 @@ const startTask = () => {
         webPreferences:{
             nodeIntegration: false,
             contextIsolation: true,
-            devTools: false,
+            devTools: true,
             sandbox: false,
             preload: preload
         }
     })
     taskWindow.loadFile(path.join(__dirname, '../app/home/taskWindow/task.html'))
     taskWindow.removeMenu()
+    // taskWindow.webContents.openDevTools()
 }
 
 // atualização de usuarios na inicialização >>>>
@@ -76,19 +78,33 @@ ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
     }
 })
 
+// solicitação de login
 ipcMain.handle('solicitacao-login', (event, login) => {
     let existe = users_list.find(user => user.email === login.email && user.senha === login.senha)
-    try{
-        if(!existe){throw new Error('Error: Usuario não existe')}
-        else{
-            return existe
-        }
-    }catch(err){
-        console.error(err)
+    
+    if(!existe){
+        return null
     }
+    return existe
 })
-
+// abrindo janela de task's
 ipcMain.on('abrir-task', () => {
     startTask()
 })
 
+
+// guardar task no json
+const list_tasks = []
+const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
+ipcMain.on('guardar-task', (event, task) => {
+    list_tasks.push(task)
+    try{
+        const task_json = JSON.stringify(list_tasks, null, 2)
+        fs.writeFileSync(caminho_tasks, task_json, 'utf-8')
+        console.log('tarefa criada com sucesso!');
+        
+        taskWindow.close()
+    }catch(err){
+        console.error(`Erro ao tentar criar tarefa: ${err}`)
+    }
+})

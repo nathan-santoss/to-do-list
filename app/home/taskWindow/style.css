@@ -1,30 +1,46 @@
-/* Seletores de Elemento e Classe */
+:root {
+    --cor-fundo: #f0ebf5;
+    --cor-card-fundo: #ffffff;
+    --cor-primaria: #a27ae7;
+    --cor-primaria-hover: #8f6bc0;
+    --cor-texto: #333333;
+    --cor-input-borda: #e1dbe9;
+    --cor-input-fundo: #f7f5fa;
+    --sombra-leve: 0 4px 10px rgba(0, 0, 0, 0.05);
+    --arredondamento-geral: 12px;
+    --arredondamento-pequeno: 8px;
+}
+
 body {
-    font-family: sans-serif;
-    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(194, 194, 194);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    color: var(--cor-texto);
+    padding: 20px;
 }
 
 .container {
-    background-color: #ffffff;
+    background-color: var(--cor-card-fundo);
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--arredondamento-geral);
+    box-shadow: var(--sombra-leve);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
+    text-align: left;
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: var(--cor-primaria);
     margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
-/* Seletores de Classe para Agrupamento de Campos */
 .form-group {
     margin-bottom: 20px;
 }
@@ -32,41 +48,54 @@ h1 {
 label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
+    font-weight: 500;
+    color: var(--cor-texto);
 }
 
-/* Seletores de Elemento para Estilizar Campos */
 input[type="text"],
 input[type="date"],
 textarea,
 select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Inclui padding e borda na largura total */
-    font-size: 16px;
+    padding: 12px 15px;
+    border: 1px solid var(--cor-input-borda);
+    border-radius: var(--arredondamento-pequeno);
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: var(--cor-input-fundo);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(162, 122, 231, 0.2);
 }
 
 textarea {
     resize: vertical;
 }
 
-/* Seletor de Elemento para o Botão */
-button {
-    background-color: #4CAF50;
+button[type="submit"] {
+    background-color: var(--cor-primaria);
     color: white;
-    padding: 12px 20px;
+    padding: 14px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--arredondamento-pequeno);
     cursor: pointer;
     width: 100%;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s;
+    margin-top: 10px;
 }
 
-button:hover {
-    background-color: #45a049;
+button[type="submit"]:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+button[type="submit"]:active {
+    transform: scale(0.99);
 }

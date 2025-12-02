@@ -12,4 +12,5 @@ const saveTask = () => {
         }
         continue
     }
+    console.log(`Aqui a tarefa como veio: ${new_task}`);
 }

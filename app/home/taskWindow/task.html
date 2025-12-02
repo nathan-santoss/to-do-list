@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Adicionar Nova Tarefa</h1>
-        <form action="/submit-task" method="POST">
+        <form action="#" method="POST">
             <div class="form-group">
                 <label for="titulo">Título da Tarefa:</label>
                 <input type="text" name="titulo" required id="title">
@@ -29,14 +29,14 @@
                 <label for="prioridade">Prioridade:</label>
                 <select id="prioridade" name="prioridade" required>
                     <option value="alta">Alta</option>
-                    <option value="media" selected>Média</option>
+                    <option value="media">Média</option>
                     <option value="baixa">Baixa</option>
                 </select>
             </div>
             
-            <button type="submit" onclick="saveTask()">Salvar Tarefa</button>
+            <button type="button" onclick="saveTask()">Salvar Tarefa</button>
         </form>
     </div>
-    <script src="renderer.js"></script>
+    <script src="./renderer.js"></script>
 </body>
 </html>

@@ -26,29 +26,16 @@ const criarJanela = () => {
     win.removeMenu()
     // win.webContents.openDevTools()
 }
+const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
+let list_tasks = null
+let users_list = []
 
 app.whenReady().then(() => {
     updade_logs()
-    criarJanela()
     uptade_tasks(caminho_tasks)
+    criarJanela()
+    
 })
-
-let taskWindow = null
-const startTask = () => {
-    taskWindow = new BrowserWindow({
-        width: 800, height: 900,
-        webPreferences:{
-            nodeIntegration: false,
-            contextIsolation: true,
-            devTools: true,
-            sandbox: false,
-            preload: preload
-        }
-    })
-    taskWindow.loadFile(path.join(__dirname, '../app/home/taskWindow/task.html'))
-    taskWindow.removeMenu()
-    // taskWindow.webContents.openDevTools()
-}
 
 // atualização de usuarios na inicialização >>>>
 const updade_logs = () => {
@@ -65,7 +52,7 @@ const updade_logs = () => {
     }
 }
 // CONFIGURAÇÃO DO PRELOAD
-let users_list = []
+
 const savesLogins = path.join(__dirname, './usuarios/users.json')
 // SOLICITAR CADASTRO
 ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
@@ -86,31 +73,38 @@ ipcMain.handle('solicitacao-login', (event, login) => {
     if(!existe){
         return null
     }
+    win.webContents.send('task-to-home', list_tasks)
     return existe
-})
-// abrindo janela de task's
-ipcMain.on('abrir-task', () => {
-    startTask()
 })
 
 
 // guardar task no json
-const list_tasks = []
-const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
+
+
 ipcMain.on('guardar-task', (event, task) => {
     list_tasks.push(task)
     try{
         const task_json = JSON.stringify(list_tasks, null, 2)
         fs.writeFileSync(caminho_tasks, task_json, 'utf-8')
         console.log('tarefa criada com sucesso!');
-        // uptade_tasks(caminho_tasks)
-        taskWindow.close()
+        uptade_tasks(caminho_tasks)
+        win.webContents.send('task-to-home', list_tasks)
     }catch(err){
         console.error(`Erro ao tentar criar tarefa: ${err}`)
+    }finally{
+        const testecaminho = path.join(__dirname, '../app/home/home.html')
+        win.loadFile(path.join(__dirname, '../app/home/home.html'))
+        console.log(testecaminho);
     }
 })
-const uptade_tasks = (caminho) => {
-    let local = fs.readFileSync(caminho, 'utf-8')
-    const fileTask = JSON.parse(local)
-    win.webContents.send('task-to-home', fileTask)
+function uptade_tasks (caminho) {
+    try{
+        let local = fs.readFileSync(caminho, 'utf-8')
+        const fileTask = JSON.parse(local)
+        list_tasks = fileTask
+        console.log(fileTask);
+    }catch(err){
+        console.error(`Erro de leitura de tarefas - ${err}`)
+        list_tasks = []
+    }
 }

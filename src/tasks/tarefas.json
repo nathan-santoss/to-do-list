@@ -1,14 +1,8 @@
 [
   {
-    "titulo": "teste",
-    "descrip": "teste",
-    "data": "2025-02-02",
-    "prioridade": "alta"
-  },
-  {
-    "titulo": "teste",
-    "descrip": "teste",
-    "data": "2026-02-01",
+    "titulo": "fazer janta",
+    "descrip": "cuscuz com salsicha",
+    "data": "2025-12-03",
     "prioridade": "alta"
   }
 ]

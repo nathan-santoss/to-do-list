@@ -30,6 +30,7 @@ const criarJanela = () => {
 app.whenReady().then(() => {
     updade_logs()
     criarJanela()
+    uptade_tasks(caminho_tasks)
 })
 
 let taskWindow = null
@@ -102,9 +103,14 @@ ipcMain.on('guardar-task', (event, task) => {
         const task_json = JSON.stringify(list_tasks, null, 2)
         fs.writeFileSync(caminho_tasks, task_json, 'utf-8')
         console.log('tarefa criada com sucesso!');
-        event.reply('task-to-home', task_json)
+        // uptade_tasks(caminho_tasks)
         taskWindow.close()
     }catch(err){
         console.error(`Erro ao tentar criar tarefa: ${err}`)
     }
 })
+const uptade_tasks = (caminho) => {
+    let local = fs.readFileSync(caminho, 'utf-8')
+    const fileTask = JSON.parse(local)
+    win.webContents.send('task-to-home', fileTask)
+}

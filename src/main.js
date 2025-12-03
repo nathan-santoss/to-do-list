@@ -102,7 +102,7 @@ ipcMain.on('guardar-task', (event, task) => {
         const task_json = JSON.stringify(list_tasks, null, 2)
         fs.writeFileSync(caminho_tasks, task_json, 'utf-8')
         console.log('tarefa criada com sucesso!');
-        
+        event.reply('task-to-home', task_json)
         taskWindow.close()
     }catch(err){
         console.error(`Erro ao tentar criar tarefa: ${err}`)

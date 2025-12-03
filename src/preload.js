@@ -4,5 +4,6 @@ contextBridge.exposeInMainWorld('api', {
     cadastro: (novo_usuario) => ipcRenderer.invoke('solicitacao-cadastro', novo_usuario),
     login: (user) => ipcRenderer.invoke('solicitacao-login', user),
     abrirTask: () => ipcRenderer.send('abrir-task'),
-    criarTask:(task) => ipcRenderer.send('guardar-task', task)
+    criarTask:(task) => ipcRenderer.send('guardar-task', task),
+    makeTask: (tarefa) => ipcRenderer.on('task-to-home', tarefa)
 })

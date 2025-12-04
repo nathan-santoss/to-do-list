@@ -69,8 +69,8 @@ ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
 // solicitação de login
 ipcMain.on('solicitacao-login', (event, login) => {
     if(users_list.length === 0){
-        return
         // inserir aqui um DIALOG para informar que não existem usuários criados
+        return
     }
     let existe = users_list.find(user => user.email === login.email && user.senha === login.senha)
     
@@ -98,6 +98,11 @@ ipcMain.on('guardar-task', (event, task) => {
         win.loadFile(path.join(__dirname, '../app/home/home.html'))
     }
 })
+ipcMain.handle('solicitacao-inicializar', () => {
+    return list_tasks
+})
+
+
 function uptade_tasks (caminho) {
     try{
         let local = fs.readFileSync(caminho, 'utf-8')

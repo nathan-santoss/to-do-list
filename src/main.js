@@ -67,14 +67,17 @@ ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
 })
 
 // solicitação de login
-ipcMain.handle('solicitacao-login', (event, login) => {
+ipcMain.on('solicitacao-login', (event, login) => {
+    if(users_list.length === 0){
+        return
+        // inserir aqui um DIALOG para informar que não existem usuários criados
+    }
     let existe = users_list.find(user => user.email === login.email && user.senha === login.senha)
     
     if(!existe){
         return null
     }
-    win.webContents.send('task-to-home', list_tasks)
-    return existe
+    win.loadFile(path.join(__dirname, '../app/home/home.html'))
 })
 
 
@@ -92,9 +95,7 @@ ipcMain.on('guardar-task', (event, task) => {
     }catch(err){
         console.error(`Erro ao tentar criar tarefa: ${err}`)
     }finally{
-        const testecaminho = path.join(__dirname, '../app/home/home.html')
         win.loadFile(path.join(__dirname, '../app/home/home.html'))
-        console.log(testecaminho);
     }
 })
 function uptade_tasks (caminho) {

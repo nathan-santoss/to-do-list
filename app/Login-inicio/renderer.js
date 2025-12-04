@@ -3,15 +3,10 @@ const ir_cadastro = () => {
 }
 
 const login_user = () => {
+    event.preventDefault()
     const login_try = {
         email: document.getElementById('email').value,
         senha: document.getElementById('pass').value
     }
-    window.api.login(login_try).then((result) => {
-        if(!result){
-            alert('Dados inválidos!')
-            return
-        }
-        window.location.href = '../home/home.html'
-    })
+    window.api.login(login_try)
 }

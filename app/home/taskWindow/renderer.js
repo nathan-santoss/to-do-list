@@ -1,4 +1,5 @@
 const saveTask = (event) => {
+    event.preventDefault()
     console.log('o objeto chegou');
     const new_task = {
         titulo: document.getElementById('title').value,

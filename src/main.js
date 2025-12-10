@@ -82,6 +82,7 @@ ipcMain.on('solicitacao-login', (event, login) => {
 
 
 ipcMain.on('guardar-task', (event, task) => {
+    task.id = list_tasks.length+1
     list_tasks.push(task)
     try{
         const task_json = JSON.stringify(list_tasks, null, 2)

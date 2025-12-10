@@ -4,15 +4,15 @@
     "descrip": "cuscuz",
     "data": "2025-01-01",
     "prioridade": "alta",
-    "checked": false,
+    "checked": true,
     "id": 1
   },
   {
-    "titulo": "almoco",
-    "descrip": "feijao",
+    "titulo": "cafe",
+    "descrip": "cafe",
     "data": "2026-02-01",
     "prioridade": "alta",
-    "checked": false,
-    "id": 1
+    "checked": true,
+    "id": 2
   }
 ]

@@ -24,7 +24,7 @@ const criarJanela = () => {
     })
     win.loadFile(paginaHtml)
     win.removeMenu()
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 }
 const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
 let list_tasks = null
@@ -68,10 +68,6 @@ ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
 
 // solicitação de login
 ipcMain.on('solicitacao-login', (event, login) => {
-    if(users_list.length === 0){
-        // inserir aqui um DIALOG para informar que não existem usuários criados
-        return
-    }
     let existe = users_list.find(user => user.email === login.email && user.senha === login.senha)
     
     if(!existe){
@@ -91,7 +87,6 @@ ipcMain.on('guardar-task', (event, task) => {
         fs.writeFileSync(caminho_tasks, task_json, 'utf-8')
         console.log('tarefa criada com sucesso!');
         uptade_tasks(caminho_tasks)
-        win.webContents.send('task-to-home', list_tasks)
     }catch(err){
         console.error(`Erro ao tentar criar tarefa: ${err}`)
     }finally{
@@ -106,11 +101,31 @@ ipcMain.handle('solicitacao-inicializar', () => {
 function uptade_tasks (caminho) {
     try{
         let local = fs.readFileSync(caminho, 'utf-8')
+        if(local === ''){
+            throw Error('Nao existem tarefas atualmente com esse usuario!')
+        }
         const fileTask = JSON.parse(local)
         list_tasks = fileTask
-        console.log(fileTask);
+        console.log('Arquivo de tarefas atualizado');
     }catch(err){
-        console.error(`Erro de leitura de tarefas - ${err}`)
+        console.error(err)
         list_tasks = []
     }
 }
+
+// funcao para atualizar tarefas marcadas como 'feitas' >>>>>>
+ipcMain.on('solicitacao-checked_Box', (event, taskId) => {
+    let dados = null
+    try{
+        dados = JSON.parse(fs.readFileSync(caminho_tasks, 'utf-8'))
+    }catch{
+        console.error('Erro ao tentar marcar a box ')
+        return
+    }
+    const taskAchada = dados.find(tarefa => tarefa.id === taskId)
+    if(taskAchada){
+        taskAchada.checked = !taskAchada.checked
+    }
+    fs.writeFileSync(caminho_tasks, JSON.stringify(dados, null, 2))
+    win.webContents.send('Atualizar-task', dados)
+})

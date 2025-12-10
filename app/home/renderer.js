@@ -1,24 +1,47 @@
-const irTask = () => {
+// Mudar para tela de criação de tarefa >>>>>
+const add_taskButton = document.getElementById("botao-addTask")
+add_taskButton.addEventListener('click', () => {
     window.location.href = './taskWindow/task.html'
-}
-
+})
+// atualizando a página home com as tarefas do usuário >>>>
+const listaHTML = document.getElementById('lista-de-tarefas')
 document.addEventListener('DOMContentLoaded', () => {
+    listaHTML.innerHTML = ''
     window.api.getInitTask().then(tarefas => {
-        if(tarefas.length > 0){
-            document.getElementById('teste-task').innerHTML = 'A tarefa chegou'
-        }
+            atualizar_tarefas(tarefas)
     }).catch(err => {
         alert('Erro ao carregar tarefas: ', err)
     })
 })
-
-window.api.makeTask((event, tarefas) => {
-    tarefas.forEach(task => {
-        document.getElementById('lista-de-tarefas').innerHTML = `<div class="task-item" id="tarefa-1">
-                        <input type="checkbox" class="task-checkbox">
-                        <span class="task-text">${task.titulo}</span>
-                        <button class="delete-task-button">🗑️</button>
-                    </div>`
+const atualizar_tarefas = (tarefas) => {
+    tarefas.forEach((task, index) => {
+        const item = document.createElement('div')
+        item.classList.add(`${task.checked ? "task-item completed" : "task-item"}`)
+        item.innerHTML = `
+        <input
+            type= "checkbox"
+            class = "task-checkbox"
+            ${task.checked ? "checked" : ""}
+        >
+        <span class = "task-text">${task.titulo}</span>
+        <button class = "delete-task-button"> 🗑️ </button>
+        `
+        listaHTML.appendChild(item)
     });
+}
+
+
+listaHTML.addEventListener('click', (event) => {
+    if(event.target.classList.contains('checkbox-task')){
+        const box = event.target.dataset.id
+        window.api.checkBox(box)
+        // aqui envia a solicitação para o main colocar como 'checked' a task
+    }
+    return
 })
+
+window.api.update_task((tarefas) => {
+    atualizar_tarefas(tarefas)
+})
+
 

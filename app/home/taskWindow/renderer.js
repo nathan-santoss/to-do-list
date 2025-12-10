@@ -1,11 +1,14 @@
+let numberTask = 0
 const saveTask = (event) => {
     event.preventDefault()
+    numberTask++
     const new_task = {
         titulo: document.getElementById('title').value,
         descrip: document.getElementById('descrip').value,
         data: document.getElementById('data').value,
         prioridade: document.getElementById('prioridade').value,
-        checked: false
+        checked: false,
+        id: numberTask
     }
     for (let key in new_task) {
         const valor = new_task[key]

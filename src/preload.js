@@ -5,10 +5,7 @@ contextBridge.exposeInMainWorld('api', {
     login: (user) => ipcRenderer.send('solicitacao-login', user),
     criarTask:(task) => ipcRenderer.send('guardar-task', task),
     getInitTask: () => ipcRenderer.invoke('solicitacao-inicializar'),
-    checkBox: (id) => ipcRenderer.send('solicitacao-checked_Box', id),
-    update_task: (callback) => ipcRenderer.on('Atualizar-task', (event, dados) => {
-        callback(dados)
-    })
+    checkBox: (id) => ipcRenderer.invoke('solicitacao-checked_Box', id),
 })
 // montando função para atualizar checkbox - olhar chatgpt
 

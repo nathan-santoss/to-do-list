@@ -24,7 +24,7 @@ const criarJanela = () => {
     })
     win.loadFile(paginaHtml)
     win.removeMenu()
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 }
 const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
 let list_tasks = null
@@ -114,18 +114,23 @@ function uptade_tasks (caminho) {
 }
 
 // funcao para atualizar tarefas marcadas como 'feitas' >>>>>>
-ipcMain.on('solicitacao-checked_Box', (event, taskId) => {
+ipcMain.handle('solicitacao-checked_Box', (event, taskId) => {
     let dados = null
     try{
         dados = JSON.parse(fs.readFileSync(caminho_tasks, 'utf-8'))
     }catch{
         console.error('Erro ao tentar marcar a box ')
-        return
+        return null
     }
     const taskAchada = dados.find(tarefa => tarefa.id === taskId)
     if(taskAchada){
-        taskAchada.checked = !taskAchada.checked
+        if(taskAchada.checked === false){
+            taskAchada.checked = true
+            return true
+        }else{
+            taskAchada.checked = false
+            return false
+        }
     }
     fs.writeFileSync(caminho_tasks, JSON.stringify(dados, null, 2))
-    win.webContents.send('Atualizar-task', dados)
 })

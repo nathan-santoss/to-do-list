@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const atualizar_tarefas = (tarefas) => {
     tarefas.forEach((task, index) => {
         const item = document.createElement('div')
-        item.classList.add(`${task.checked ? "task-item completed" : "task-item"}`)
+        item.classList.add(`${task.checked ? "task-item completed" : "checkbox-task"}`)
+        item.id = `${index+1}`
         item.innerHTML = `
         <input
             type= "checkbox"
@@ -32,16 +33,22 @@ const atualizar_tarefas = (tarefas) => {
 
 
 listaHTML.addEventListener('click', (event) => {
-    if(event.target.classList.contains('checkbox-task')){
+    if(event.target.classList.contains('task-checkbox') || event.target.classList.contains('')){
         const box = event.target.dataset.id
-        window.api.checkBox(box)
+        window.api.checkBox(box).then((result) => {
+            let tarefaEscolhida = document.querySelector(`input[id="${result}"]`);
+            if(result === null){return}
+            else if(result === true){
+                tarefaEscolhida.classList.toggle('checkbox-task')
+            }else{
+                tarefaEscolhida.classList.toggle('task-item completed')
+            }
+        })
         // aqui envia a solicitação para o main colocar como 'checked' a task
     }
     return
 })
 
-window.api.update_task((tarefas) => {
-    atualizar_tarefas(tarefas)
-})
+
 
 

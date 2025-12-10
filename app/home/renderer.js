@@ -16,12 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
 const atualizar_tarefas = (tarefas) => {
     tarefas.forEach((task, index) => {
         const item = document.createElement('div')
-        item.classList.add(`${task.checked ? "task-item completed" : "checkbox-task"}`)
-        item.id = `${index+1}`
+        item.classList.add(`task-item`)
+        if(task.checked){
+            item.classList.add('completed')
+        }
         item.innerHTML = `
         <input
             type= "checkbox"
             class = "task-checkbox"
+            data-id = ${task.id}
             ${task.checked ? "checked" : ""}
         >
         <span class = "task-text">${task.titulo}</span>
@@ -33,15 +36,14 @@ const atualizar_tarefas = (tarefas) => {
 
 
 listaHTML.addEventListener('click', (event) => {
-    if(event.target.classList.contains('task-checkbox') || event.target.classList.contains('')){
-        const box = event.target.dataset.id
+    if(event.target.classList.contains('task-checkbox')){
+        const box = parseInt(event.target.dataset.id)
+        const taskDiv = event.target.closest('.task-item')
         window.api.checkBox(box).then((result) => {
-            let tarefaEscolhida = document.querySelector(`input[id="${result}"]`);
-            if(result === null){return}
-            else if(result === true){
-                tarefaEscolhida.classList.toggle('checkbox-task')
-            }else{
-                tarefaEscolhida.classList.toggle('task-item completed')
+            if(result === true){
+                taskDiv.classList.add('completed')
+            }else if(result === false){
+                taskDiv.classList.remove('completed')
             }
         })
         // aqui envia a solicitação para o main colocar como 'checked' a task

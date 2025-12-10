@@ -25,6 +25,7 @@ const criarJanela = () => {
     win.loadFile(paginaHtml)
     win.removeMenu()
     // win.webContents.openDevTools()
+    win.maximize()
 }
 const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
 let list_tasks = null
@@ -126,11 +127,13 @@ ipcMain.handle('solicitacao-checked_Box', (event, taskId) => {
     if(taskAchada){
         if(taskAchada.checked === false){
             taskAchada.checked = true
+            fs.writeFileSync(caminho_tasks, JSON.stringify(dados, null, 2))
             return true
         }else{
             taskAchada.checked = false
+            fs.writeFileSync(caminho_tasks, JSON.stringify(dados, null, 2))
             return false
         }
     }
-    fs.writeFileSync(caminho_tasks, JSON.stringify(dados, null, 2))
+    
 })

@@ -24,7 +24,7 @@ const criarJanela = () => {
     })
     win.loadFile(paginaHtml)
     win.removeMenu()
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
     win.maximize()
 }
 const caminho_tasks = path.join(__dirname, "./tasks/tarefas.json")
@@ -37,6 +37,8 @@ app.whenReady().then(() => {
     criarJanela()
     
 })
+
+
 
 // atualização de usuarios na inicialização >>>>
 const updade_logs = () => {
@@ -57,6 +59,7 @@ const updade_logs = () => {
 const savesLogins = path.join(__dirname, './usuarios/users.json')
 // SOLICITAR CADASTRO
 ipcMain.handle('solicitacao-cadastro', (event, novo_usuario) => {
+    novo_usuario.id = users_list.length+1
     users_list.push(novo_usuario)
     console.log('Usuario criado')
     try {
@@ -137,4 +140,11 @@ ipcMain.handle('solicitacao-checked_Box', (event, taskId) => {
         }
     }
     
+})
+
+// funcao para deletar uma tarefa >>>>>
+ipcMain.handle('solicitacao-deleteTask', (event, taskID) => {
+    let tarefa_index = list_tasks.indexOf(tarefa => tarefa.id === taskID)
+    list_tasks.splice(tarefa_index, 1)
+    return taskID
 })

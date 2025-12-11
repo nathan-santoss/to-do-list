@@ -1,18 +1,2 @@
 [
-  {
-    "titulo": "jantar",
-    "descrip": "cuscuz",
-    "data": "2025-01-01",
-    "prioridade": "alta",
-    "checked": true,
-    "id": 1
-  },
-  {
-    "titulo": "cafe",
-    "descrip": "cafe",
-    "data": "2026-02-01",
-    "prioridade": "alta",
-    "checked": true,
-    "id": 2
-  }
 ]

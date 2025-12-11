@@ -4,7 +4,8 @@ const cadastrar_usuario = (event) => {
             nome: document.getElementById('nome').value,
             email: document.getElementById('email').value,
             cpf: document.getElementById('cpf').value,
-            senha: conflit_pass(document.getElementById('senha-1').value, document.getElementById('senha-2').value)
+            senha: conflit_pass(document.getElementById('senha-1').value, document.getElementById('senha-2').value),
+            id: null
         }
         window.api.cadastro(novo_usuario).then((result) => {
             if(result === false){

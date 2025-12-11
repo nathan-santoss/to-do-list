@@ -6,6 +6,6 @@ contextBridge.exposeInMainWorld('api', {
     criarTask:(task) => ipcRenderer.send('guardar-task', task),
     getInitTask: () => ipcRenderer.invoke('solicitacao-inicializar'),
     checkBox: (id) => ipcRenderer.invoke('solicitacao-checked_Box', id),
+    delete_task: (taskID) => ipcRenderer.invoke('solicitacao-deleteTask', taskID)
 })
 // montando função para atualizar checkbox - olhar chatgpt
-

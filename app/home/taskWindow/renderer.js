@@ -1,14 +1,16 @@
-let numberTask = 0
+import { formatar_data, set_diaDaSemana } from "../../function/function.js"
 const saveTask = (event) => {
     event.preventDefault()
-    numberTask++
+    const dataAtual = new Date()
     const new_task = {
         titulo: document.getElementById('title').value,
         descrip: document.getElementById('descrip').value,
-        data: document.getElementById('data').value,
+        data: set_diaDaSemana(dataAtual),
         prioridade: document.getElementById('prioridade').value,
+        date_create: formatar_data(dataAtual),
+        data_conclusao: document.getElementById('data').value,
         checked: false,
-        id: numberTask
+        id: null
     }
     for (let key in new_task) {
         const valor = new_task[key]
@@ -17,7 +19,10 @@ const saveTask = (event) => {
         }
         continue
     }
-    alert(`O objeto chegou aqui`)
+    if(new Date(new_task.data_conclusao).getTime() < dataAtual.getTime()){
+        // crie aqui uma funcionalidade para emitir um alerta personalizado 
+        return
+    }
     window.api.criarTask(new_task)
 }
 const botao_save = document.getElementById('botao-save')

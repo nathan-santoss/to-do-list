@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Erro ao carregar tarefas: ', err)
     })
 })
-const atualizar_tarefas = (tarefas) => {
+const atualizar_tarefas = (tarefas, diaSemana) => {
     tarefas.forEach((task, index) => {
         const item = document.createElement('div')
         item.classList.add(`task-item`)
@@ -47,6 +47,12 @@ listaHTML.addEventListener('click', (event) => {
             }
         })
         // aqui envia a solicitação para o main colocar como 'checked' a task
+    }
+    else if(event.target.classList.contains('delete-task-button')){
+        const taskID = parseInt(event.target.dataset.id)
+        window.api.delete_task(taskID).then((result) => {
+            // criar interação para deletar a task
+        })
     }
     return
 })
